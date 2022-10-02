@@ -82,20 +82,20 @@ pyber_summary_df.iloc[:, 2:] = pyber_summary_df.iloc[:, 2:].applymap('${:,.2f}'.
 ```
 
 ### Deliverable 2
-I tested two scenarios for accomplishing **Deliverable 2** because a full week is generally counted from Monday 00:00 to Sunday 23:59 (refer to [ISO 8601 Standard - date and time format](https://en.wikipedia.org/wiki/ISO_8601)). The sample image provided by PyBer Company was off by one day in the week that ended on Sunday 2019-04-28 23:59, though both scenarios could be correct depending on how a company defines the start datetime and the end datetime of a customized week.
+I tested two date range scenarios for accomplishing **Deliverable 2** because a full week is generally counted from Monday 00:00 to Sunday 23:59 (refer to [ISO 8601 Standard - date and time format](https://en.wikipedia.org/wiki/ISO_8601)). The sample image in the instruction of Module 5 Challenge was off by one day in the week that ended on Sunday 2019-04-28 23:59, though both scenarios could be correct depending on how a company defines the start datetime and the end datetime of a customized week.
 
-1. Scenario#1: `sum_pyber_pivot.loc['2019-01-01':'2019-04-29']` only included data before 2019-04-29 00:00:00 (see Fig. 8).
-2. Scenario#2: `sum_pyber_pivot.loc['2019-01-01':'2019-04-28']` only included data before 2019-04-28 00:00:00. This was accidentally used by PyBer Company for creating its multiple-line chart of total fares for each city type. Fig. 9 is also included here just for clarifying my observation of a slight difference between our results.
+1. Scenario#1: `sum_pyber_pivot.loc['2019-01-01':'2019-04-29']` included data before 2019-04-29 00:00:00. The date range of 2019-01-01 through 2019-04-29 was stated in PyBer_Challenge_starter_code.ipynb. Fig. 8 is included here just for documenting my understanding of a slight difference between our results and the standard datetime formats.
+2. Scenario#2: `sum_pyber_pivot.loc['2019-01-01':'2019-04-28']` included data before 2019-04-28 00:00:00. The date range of 2019-01-01 through 2019-04-28 was required by PyBer Company for creating its multiple-line chart of total fares. Fig. 9 was completed based on the date range that exactly meets **Deliverable 2 Requirements**.
 
 ```
 # 4. Create a new DataFrame from the pivot table DataFrame using loc on the given dates, '2019-01-01':'2019-04-29'.
 sum_pyber_pivot_df429 = sum_pyber_pivot.loc['2019-01-01':'2019-04-29']
-# Minor revision of the end-date to align with image in the instruction
+# Minor revision of the end-date to align with image in Module 5 Challenge, '2019-01-01':'2019-04-28'.
 sum_pyber_pivot_df = sum_pyber_pivot.loc['2019-01-01':'2019-04-28']
-display(sum_pyber_pivot_df.tail(), sum_pyber_pivot_df429.tail())
+display(sum_pyber_pivot_df429.tail(), sum_pyber_pivot_df.tail())
 ```
 
-The full implementation based on our pseudocode and the refactored code can be found in [PyBer_Challenge.ipynb](./PyBer_Challenge.ipynb).
+The full implementation based on our pseudocode and refactored code can be reviewed in [PyBer_Challenge.ipynb](./PyBer_Challenge.ipynb).
 
 ## Results and Summary
 Let us assess our results and summary that meet the requirements of each deliverable in the following sections. Other preliminary analysis results are viewable and saved under the *analysis* folder within this GitHub repo (see [GitHub Repo Branches](#github-repo-branches)).
@@ -112,12 +112,12 @@ Let us assess our results and summary that meet the requirements of each deliver
 | Urban	   | 1,625       | 2,405         | $39,854.38  | $24.53                | $16.57                  |
 
 ### Deliverable 2 Summary
-**Table 2** provided a comparison of the two possible scenarios for generating the multiple-line chart of total fares for each city type.
+**Table 2** provided a comparison of the two date range scenarios when generating the multiple-line charts of total fares for each city type.
 
-1. Scenario#1: The final week, which ended on Sunday 2019-04-28 23:59, included the total fare up to 2019-04-28 19:35:03 (**before 2019-04-29 00:00**) when we generated the chart by using `sum_pyber_pivot.loc['2019-01-01':'2019-04-29']` (see Fig. 8).
-2. Scenario#2: The final week, which ended on Sunday 2019-04-28 23:59, only included the total fare up to 2019-04-27 23:52:44 (**before 2019-04-28 00:00**) when we generated the chart by using `sum_pyber_pivot.loc['2019-01-01':'2019-04-28']` (see Fig. 9).
+1. Scenario#1: The final week, which ended on Sunday 2019-04-28 23:59, included the total fare up to 2019-04-28 19:35:03 (**before 2019-04-29 00:00**) in the chart (see Fig. 8).
+2. Scenario#2: The final week, which ended on Sunday 2019-04-28 23:59, only included the total fare up to 2019-04-27 23:52:44 (**before 2019-04-28 00:00** based on **Deliverable 2 Requirements**) in the chart because we applied `sum_pyber_pivot.loc['2019-01-01':'2019-04-28']` instead (see Fig. 9).
 
-<b>Table 2. Results from `resample('W')` Method Comparing Two Possible Scenarios</b>
+<b>Table 2. Results from `resample('W')` Method Comparing Two Date Range Scenarios</b>
 
 | Case study | Week       | Rural  | Suburban | Urban   | Image  |
 | :---       | ---:       |  ---:  |  ---:    |  ---:   | ---:   |
@@ -128,7 +128,7 @@ Let us assess our results and summary that meet the requirements of each deliver
 **Fig. 8 Fare summary by city type of PyBer Company**
 
 ![Fig. 9](./analysis/PyBer_fare_summary.png)\
-**Fig. 9 Fare summary by city type of PyBer Company**
+**Fig. 9 Fare summary by city type of PyBer Company (Deliverable 2 Requirements)**
 
 ### Concluding Remarks
 Here are the executive summary and the ride-sharing summary DataFrame by city type in percentage (**Table 3**) for our decision-makers at PyBer.
